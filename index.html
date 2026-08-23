@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>今日饮见 · Sip & Arcana</title>
+    <meta name="description" content="让你喝下的每一杯，都成为内心的一次回应。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <div class="stars stars-a"></div><div class="stars stars-b"></div>
+      <header class="site-header">
+        <a class="brand" href="#top"><span class="brand-mark">✦</span><span>今日饮见</span><em>Sip & Arcana</em></a>
+        <span class="header-note">A daily ritual for your inner weather</span>
+      </header>
+
+      <section class="hero" id="top">
+        <div class="moon-orbit"><span></span></div>
+        <p class="eyebrow">THE ORACLE OF YOUR EVERYDAY SIP</p>
+        <h1>让你喝下的每一杯<br /><i>都成为内心的一次回应。</i></h1>
+        <p class="hero-copy">选择今天的饮品与情绪，让三张牌为你照见此刻。</p>
+        <button class="primary-cta" data-scroll-to="ritual">开始今日饮见 <span>↗</span></button>
+      </section>
+
+      <section class="ritual-section" id="ritual">
+        <div class="section-heading"><span>01</span><div><p class="eyebrow">YOUR DAILY SIP</p><h2>今天喝了什么？</h2></div></div>
+        <p class="section-intro">每一杯饮品，都是你今天选择照顾自己的方式。</p>
+        <div class="choice-grid drinks" id="drinkChoices"></div>
+
+        <div class="section-heading mood-heading"><span>02</span><div><p class="eyebrow">YOUR INNER WEATHER</p><h2>此刻的你，接近哪种情绪？</h2></div></div>
+        <p class="section-intro">不必解释，只需选出最接近的一种。</p>
+        <div class="choice-grid moods" id="moodChoices"></div>
+        <button class="reveal-cta" id="revealBtn" disabled>让牌面回应我 <span>✦</span></button>
+      </section>
+
+      <section class="result-section hidden" id="result">
+        <div class="result-topline"><span class="eyebrow">YOUR THREE-CARD READING</span><span id="resultMeta"></span></div>
+        <h2>今日秘语，已经在等你。</h2>
+        <p class="result-lead">三张牌从可见与不可见之间浮现，带来一段只属于今天的回应。</p>
+        <div class="tarot-spread" id="tarotSpread"></div>
+        <div class="reading-copy" id="readingCopy"></div>
+        <div class="result-actions"><button class="secondary-cta" id="copyBtn">复制结果文案</button><button class="primary-cta" id="shareBtn">生成分享结果图 <span>↗</span></button></div>
+        <p class="disclaimer">本内容仅供娱乐与自我探索，不代表确定的未来预测。</p>
+        <button class="restart" id="restartBtn">↻ 再饮见一次</button>
+      </section>
+      <footer>今日饮见 · Sip & Arcana <span>✦</span></footer>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

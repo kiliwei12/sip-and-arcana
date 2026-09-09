@@ -14,7 +14,8 @@ const minorCards=Object.entries(suitInfo).flatMap(([suit,[symbol,theme,shadow]])
 const cards=[...majorCards,...minorCards];
 const state={drink:null,mood:null};
 const statsKey='sipArcanaStats';
-const readStats=()=>{try{return JSON.parse(localStorage.getItem(statsKey))||{started:0,completed:0,shares:0,drinks:{},moods:{}}}catch{return {started:0,completed:0,shares:0,drinks:{},moods:{}}}};
+const emptyStats=()=>({started:0,completed:0,shares:0,drinks:{},moods:{}});
+const readStats=()=>{try{const saved=JSON.parse(localStorage.getItem(statsKey)||'null')||{};return {...emptyStats(),...saved,drinks:{...(saved.drinks||{})},moods:{...(saved.moods||{})}}}catch{return emptyStats()}};
 const writeStats=stats=>localStorage.setItem(statsKey,JSON.stringify(stats));
 function renderStats(){const stats=readStats();const top=items=>Object.entries(items).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';$('#topDrink').textContent=top(stats.drinks);$('#topMood').textContent=top(stats.moods);$('#completionRate').textContent=`${stats.started?Math.round(stats.completed/stats.started*100):0}%`;$('#shareCount').textContent=stats.shares}
 function bumpChoice(type,value){const stats=readStats();const bucket=type==='drink'?stats.drinks:stats.moods;bucket[value]=(bucket[value]||0)+1;writeStats(stats);renderStats()}
@@ -30,6 +31,8 @@ let lastSpread=null;
 async function getAiReading(spread){
   const payload={drink:state.drink,mood:state.mood,cards:spread.map(c=>({name:c.name,orientation:c.reversed?'逆位':'正位',role:c.role,meaning:c.meaning,roleKeyword:c.roleKeyword}))};
   const response=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),25000);
+  let response; try{response=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal})}finally{clearTimeout(timeout)}
   if(!response.ok) throw new Error('API unavailable');
   const data=await response.json();
   if(data.sections?.length===3)return data.sections;
@@ -63,4 +66,5 @@ function createShareImage(){const stats=readStats();stats.shares+=1;writeStats(s
 $('#revealBtn').addEventListener('click',()=>showResult());$('#retryBtn').addEventListener('click',()=>showResult(lastSpread||draw()));$('#copyBtn').addEventListener('click',async()=>{await navigator.clipboard.writeText(window.currentText||'');$('#copyBtn').textContent='已复制秘语 ✓';setTimeout(()=>$('#copyBtn').textContent='复制结果文案',1800)});$('#shareBtn').addEventListener('click',createShareImage);$('#restartBtn').addEventListener('click',()=>location.reload());
 document.querySelectorAll('[data-feedback]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-feedback]').forEach(item=>item.classList.remove('selected'));button.classList.add('selected');$('#feedbackThanks').textContent=`已记录：${button.dataset.feedback}。感谢你的回应。`;$('#feedbackThanks').classList.remove('hidden')}));
 
+renderStats();
 renderStats();

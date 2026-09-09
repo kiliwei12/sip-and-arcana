@@ -41,12 +41,22 @@
         <div class="result-topline"><span class="eyebrow">YOUR THREE-CARD READING</span><span id="resultMeta"></span></div>
         <h2>今日秘语，已经在等你。</h2>
         <p class="result-lead">三张牌从可见与不可见之间浮现，带来一段只属于今天的回应。</p>
+        <div class="ai-status hidden" id="aiStatus" role="status" aria-live="polite"></div>
         <div class="tarot-spread" id="tarotSpread"></div>
+        <div class="core-secret hidden" id="coreSecret"></div>
         <div class="reading-copy" id="readingCopy"></div>
-        <div class="result-actions"><button class="secondary-cta" id="copyBtn">复制结果文案</button><button class="primary-cta" id="shareBtn">生成分享结果图 <span>↗</span></button></div>
+        <div class="reading-error hidden" id="readingError">
+          <span>牌面暂时沉默了，请再试一次。</span>
+          <button class="secondary-cta" id="retryBtn" type="button">重新生成</button>
+        </div>
+        <div class="result-actions">
+          <button class="secondary-cta" id="copyBtn">复制结果文案</button>
+          <button class="primary-cta" id="shareBtn">生成分享结果图 <span>↗</span></button>
+        </div>
         <p class="disclaimer">本内容仅供娱乐与自我探索，不代表确定的未来预测。</p>
         <button class="restart" id="restartBtn">↻ 再饮见一次</button>
       </section>
+
       <footer>今日饮见 · Sip & Arcana <span>✦</span></footer>
     </main>
     <script src="./app.js"></script>

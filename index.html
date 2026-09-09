@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>今日饮见 · Sip & Arcana</title>
-    <meta name="description" content="让你喝下的每一杯，都成为内心的一次回应。" />
+    <meta
+      name="description"
+      content="让你喝下的每一杯，都成为内心的一次回应。"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,11 +28,16 @@
           <span>今日饮见</span>
           <em>Sip & Arcana</em>
         </a>
-        <span class="header-note">A daily ritual for your inner weather</span>
+        <span class="header-note">
+          A daily ritual for your inner weather
+        </span>
       </header>
 
       <section class="hero" id="top">
-        <div class="moon-orbit"><span></span></div>
+        <div class="moon-orbit">
+          <span></span>
+        </div>
+
         <p class="eyebrow">THE ORACLE OF YOUR EVERYDAY SIP</p>
 
         <h1>
@@ -92,7 +100,12 @@
           三张牌从可见与不可见之间浮现，带来一段只属于今天的回应。
         </p>
 
-        <div class="ai-status hidden" id="aiStatus" role="status" aria-live="polite"></div>
+        <div
+          class="ai-status hidden"
+          id="aiStatus"
+          role="status"
+          aria-live="polite"
+        ></div>
 
         <div class="tarot-spread" id="tarotSpread"></div>
 
@@ -116,6 +129,26 @@
           >
             牌面展示沉默了？请再试一次。
           </button>
+        </div>
+
+        <div class="feedback hidden" id="feedback" aria-live="polite">
+          <p>这次的秘语对你有帮助吗？</p>
+
+          <div class="feedback-options">
+            <button type="button" data-feedback="有帮助">
+              有帮助
+            </button>
+
+            <button type="button" data-feedback="一般">
+              一般
+            </button>
+
+            <button type="button" data-feedback="没有帮助">
+              没有帮助
+            </button>
+          </div>
+
+          <span class="feedback-thanks hidden" id="feedbackThanks"></span>
         </div>
 
         <p class="disclaimer">

@@ -34,6 +34,7 @@ async function showResult(spread=draw()){
   $('#result').classList.remove('hidden'); $('#result').scrollIntoView({behavior:'smooth'});
   $('#aiStatus').className='ai-status loading'; $('#aiStatus').textContent='正在为你整理三张牌之间的线索…'; $('#aiStatus').classList.remove('hidden');
   $('#retryBtn').classList.add('hidden'); $('#resultActions').classList.add('hidden'); $('#coreSecret').classList.add('hidden'); $('#tarotSpread').innerHTML=''; $('#readingCopy').innerHTML='';
+  $('#retryBtn').classList.add('hidden'); $('#resultActions').classList.add('hidden'); $('#feedback').classList.add('hidden'); $('#feedbackThanks').classList.add('hidden'); $('#coreSecret').classList.add('hidden'); $('#tarotSpread').innerHTML=''; $('#readingCopy').innerHTML='';
   try{
     const lines=await getAiReading(spread);
     $('#aiStatus').classList.add('hidden');
@@ -44,9 +45,11 @@ async function showResult(spread=draw()){
     $('#readingCopy').innerHTML=lines.map((x,i)=>`<div class="reading-block"><h3>${spread[i].role} · ${spread[i].name} ${spread[i].reversed?'逆位':'正位'}</h3><p>${x}</p></div>`).join('');
     window.currentText=`今日饮见 · ${state.drink} · ${state.mood}\n\n${lines.join('\n\n')}`;
     $('#resultActions').classList.remove('hidden');
+    $('#feedback').classList.remove('hidden');
   }catch(error){
     console.warn(error); $('#aiStatus').className='ai-status error'; $('#aiStatus').textContent='牌面暂时无法连接，请稍后重试。'; $('#resultActions').classList.remove('hidden'); $('#retryBtn').classList.remove('hidden');
   }finally{ $('#revealBtn').textContent='让牌面回应我'; $('#revealBtn').disabled=false; }
 }
 function createShareImage(){const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;const ctx=canvas.getContext('2d');const g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,'#312044');g.addColorStop(.5,'#120d1d');g.addColorStop(1,'#08070d');ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);ctx.strokeStyle='rgba(215,179,106,.45)';ctx.lineWidth=2;ctx.strokeRect(46,46,988,1258);ctx.fillStyle='#d7b36a';ctx.font='28px serif';ctx.fillText('✦  今日饮见 · SIP & ARCANA',84,120);ctx.fillStyle='#f4ede4';ctx.font='48px serif';ctx.fillText(`${state.drink} · ${state.mood}`,84,210);ctx.font='34px serif';ctx.fillStyle='#d7b36a';ctx.fillText('今日三牌秘语',84,290);const cardNames=[...document.querySelectorAll('.card-name')].map(x=>x.textContent);cardNames.forEach((name,i)=>{ctx.fillStyle='#e4c995';ctx.font='30px serif';ctx.fillText(name,84,390+i*70)});ctx.fillStyle='#c6b9b8';ctx.font='26px serif';const words=(document.querySelector('#coreSecret p:last-child')?.textContent||'让今天的回应，成为温柔的方向。').slice(0,150);words.match(/.{1,24}/g)?.forEach((line,i)=>ctx.fillText(line,84,700+i*48));ctx.fillStyle='#827681';ctx.font='20px serif';ctx.fillText('仅供娱乐与自我探索，不代表确定的未来预测。',84,1240);const link=document.createElement('a');link.download='今日饮见-分享.png';link.href=canvas.toDataURL('image/png');link.click()}
 $('#revealBtn').addEventListener('click',()=>showResult());$('#retryBtn').addEventListener('click',()=>showResult(lastSpread||draw()));$('#copyBtn').addEventListener('click',async()=>{await navigator.clipboard.writeText(window.currentText||'');$('#copyBtn').textContent='已复制秘语 ✓';setTimeout(()=>$('#copyBtn').textContent='复制结果文案',1800)});$('#shareBtn').addEventListener('click',createShareImage);$('#restartBtn').addEventListener('click',()=>location.reload());
+document.querySelectorAll('[data-feedback]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-feedback]').forEach(item=>item.classList.remove('selected'));button.classList.add('selected');$('#feedbackThanks').textContent=`已记录：${button.dataset.feedback}。感谢你的回应。`;$('#feedbackThanks').classList.remove('hidden')}));

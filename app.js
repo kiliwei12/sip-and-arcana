@@ -1,16 +1,27 @@
 const drinks=[['☕','咖啡'],['♨','茶'],['🧋','奶茶'],['🥛','牛奶'],['💧','矿泉水'],['🍊','果汁'],['🥤','汽水'],['🍶','酸奶']];
 const moods=[['☀','愉悦'],['◌','焦虑'],['☾','疲惫'],['◇','迷茫'],['✧','平静'],['♢','低落'],['⚡','兴奋']];
-const cards=[['女祭司','☽'],['圣杯女王','♔'],['星星','✦'],['隐者','☿'],['力量','♜'],['节制','◒'],['太阳','☼'],['月亮','☾'],['魔术师','✺'],['世界','◎'],['正义','⚖'],['愚者','✹']];
+const majorCards=[
+  ['愚者','✹','新的开始、信任直觉与轻装前行','鲁莽、逃避责任与缺乏准备'],['魔术师','✺','资源整合、表达能力与主动创造','能量分散、操控感与承诺落空'],['女祭司','☽','直觉、内在知识与安静观察','压抑直觉、信息不全与过度猜疑'],['皇后','♛','滋养、丰盛与允许自己成长','过度付出、依赖或创造力受阻'],['皇帝','♜','边界、秩序与稳定的掌控感','控制过度、僵化或害怕失去掌控'],['教皇','♗','传统支持、学习与价值观指引','盲从规则、教条或与内心脱节'],['恋人','♡','真诚连接、选择与价值一致','犹豫、失衡或回避真实感受'],['战车','▣','意志、方向感与带着决心前进','内耗、急于证明或方向失控'],['力量','♞','温柔的勇气、自我接纳与情绪驯服','自我怀疑、压抑情绪或逞强'],['隐者','☿','独处、反思与寻找内在答案','封闭、孤立或沉溺于想太多'],['命运之轮','◉','变化、转机与接受流动','抗拒变化、重复旧循环或失去节奏'],['正义','⚖','诚实、平衡与为选择负责','偏见、逃避后果或内心失衡'],['倒吊人','◒','暂停、换位思考与放下旧视角','无谓等待、牺牲过度或停滞'],['死神','✦','结束旧阶段、蜕变与腾出空间','抗拒告别、拖延改变或对失去恐惧'],['节制','◌','调和、耐心与找到适合自己的节奏','失衡、过量或难以整合矛盾'],['恶魔','⛓','看见执念、欲望与夺回选择权','依赖松动、挣脱束缚或仍被诱惑牵引'],['高塔','⚡','打破假象、突然而必要的清醒','害怕崩塌、延迟面对或改变带来的混乱'],['星星','✦','希望、疗愈与重新相信未来','失望、能量低落或暂时看不见方向'],['月亮','☾','感受潜意识、穿过不确定与辨认恐惧','焦虑放大、误判或被想象牵着走'],['太阳','☼','明朗、活力与允许自己被看见','过度乐观、疲惫伪装或快乐有阴影'],['审判','♧','觉醒、复盘与回应内心召唤','自我批判、逃避复盘或不敢翻篇'],['世界','◎','完成、整合与看见自己的完整','未完成感、循环未闭合或难以认可自己']
+].map(([name,symbol,upright,reversed])=>({name,symbol,upright,reversed,roleKeywords:{'当前状态':upright,'行动建议':upright,'今日结果':upright}}));
+const suitInfo={
+  '权杖':['🔥','行动、热情与创造力','行动冲动、精力分散与过度消耗'],
+  '圣杯':['♔','情感、关系与内在感受','情绪泛滥、依恋与逃避感受'],
+  '宝剑':['⚔','思考、沟通与清晰判断','焦虑、冲突与过度思考'],
+  '星币':['◈','现实、身体感受与稳定积累','匮乏感、停滞与过度计较']
+};
+const rankInfo=[['王牌','开始与潜能','错失开始或能量未落地'],['二','选择与平衡','犹豫失衡或逃避选择'],['三','成长与协作','进展受阻或缺少支持'],['四','稳定与休息','停滞、封闭或过度守成'],['五','挑战与摩擦','内耗、失落或不必要的竞争'],['六','回归与流动','沉溺过去或前进迟疑'],['七','考验与坚持','防御过度或轻易放弃'],['八','速度与转变','拖延、混乱或失去方向'],['九','韧性与临界点','疲惫、戒备或难以求助'],['十','阶段完成与责任','负担过重或无法放下'],['侍者','消息、探索与新视角','不成熟、分心或消息延误'],['骑士','推进、追寻与表达','冲动、反复或行动失速'],['王后','滋养、掌握与成熟感受','压抑、过度照顾他人或失去边界'],['国王','领导、整合与稳定输出','控制、僵硬或责任失衡']];
+const minorCards=Object.entries(suitInfo).flatMap(([suit,[symbol,theme,shadow]])=>rankInfo.map(([rank,u,r])=>({name:`${suit}${rank}`,symbol,upright:`${theme}中的${u}。这张牌提醒你把注意力放回可感知的现实，并相信小步积累会形成方向。`,reversed:`${shadow}中的${r}。这张牌提醒你先承认阻力，再调整投入方式，不必用更大的力气重复旧路径。`,roleKeywords:{'当前状态':`${theme}与${u}`,'行动建议':`围绕${u}做一个清晰选择`,'今日结果':`从${u}中看见可感知的变化`}})));
+const cards=[...majorCards,...minorCards];
 const state={drink:null,mood:null};
 const $=s=>document.querySelector(s);
 function renderChoices(items,id,type){$(id).innerHTML=items.map(([icon,label])=>`<button class="choice" data-type="${type}" data-value="${label}" type="button"><span class="choice-icon">${icon}</span><span class="choice-label">${label}</span></button>`).join('')}
 renderChoices(drinks,'#drinkChoices','drink');renderChoices(moods,'#moodChoices','mood');
 document.addEventListener('click',e=>{const c=e.target.closest('.choice');if(c){document.querySelectorAll(`[data-type="${c.dataset.type}"]`).forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state[c.dataset.type]=c.dataset.value;$('#revealBtn').disabled=!(state.drink&&state.mood)}});
 document.querySelectorAll('[data-scroll-to]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.scrollTo).scrollIntoView({behavior:'smooth'})));
-function draw(){return Array.from({length:3},(_,i)=>{const [name,symbol]=cards[Math.floor(Math.random()*cards.length)];return {name,symbol,reversed:Math.random()>.56,role:['当前状态','行动建议','今日结果'][i]}})}
+function draw(){return Array.from({length:3},(_,i)=>{const card=cards[Math.floor(Math.random()*cards.length)];const reversed=Math.random()>.56;return {...card,reversed,role:['当前状态','行动建议','今日结果'][i],meaning:reversed?card.reversed:card.upright,roleKeyword:card.roleKeywords[['当前状态','行动建议','今日结果'][i]]}})}
 function makeReading(spread){const tone={愉悦:'明亮而有余温',焦虑:'敏锐却略显拥挤',疲惫:'需要被温柔托住',迷茫:'正在寻找一条可走的路',平静:'拥有安静的力量',低落:'藏着尚未说出的感受',兴奋:'有一束能量正准备出发'}[state.mood];const lines=[`${spread[0].name}${spread[0].reversed?'逆位':''}读取着你此刻${tone}的情绪暗流。你选择的${state.drink}，像一枚落入水面的信号，让那些不易察觉的感受慢慢浮现。`,`当${spread[1].name}${spread[1].reversed?'逆位':''}来到行动的位置，它没有催促你立刻改变一切。它只提醒你，把注意力放回当下最值得被照顾的那一小部分。`,`${spread[2].name}${spread[2].reversed?'逆位':''}守望着今日尚未展开的风景。无需向未知索取答案，保留一点空间，回应会在你愿意倾听时出现。`];return lines}
 async function getAiReading(spread){
-  const payload={drink:state.drink,mood:state.mood,cards:spread.map(c=>({name:c.name,orientation:c.reversed?'逆位':'正位',role:c.role}))};
+  const payload={drink:state.drink,mood:state.mood,cards:spread.map(c=>({name:c.name,orientation:c.reversed?'逆位':'正位',role:c.role,meaning:c.meaning,roleKeyword:c.roleKeyword}))};
   try{const response=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok) throw new Error('API unavailable');const data=await response.json();if(data.sections?.length===3)return data.sections}catch(error){console.warn('Using local fallback reading',error)}
   return makeReading(spread)
 }

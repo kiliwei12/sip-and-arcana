@@ -8,13 +8,15 @@
       name="description"
       content="让你喝下的每一杯，都成为内心的一次回应。"
     />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+
+    <link rel="stylesheet" href="./styles.css?v=20260909" />
   </head>
 
   <body>
@@ -63,6 +65,145 @@
             <h2>今天喝了什么？</h2>
           </div>
         </div>
+
+        <p class="section-intro">
+          每一杯饮品，都是你今天选择照顾自己的方式。
+        </p>
+
+        <div class="choice-grid drinks" id="drinkChoices"></div>
+
+        <div class="section-heading mood-heading">
+          <span>02</span>
+          <div>
+            <p class="eyebrow">YOUR INNER WEATHER</p>
+            <h2>此刻的你，接近哪种情绪？</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          不必解释，只需选出最接近的一种。
+        </p>
+
+        <div class="choice-grid moods" id="moodChoices"></div>
+
+        <button class="reveal-cta" id="revealBtn" disabled>
+          让牌面回应我 <span>✦</span>
+        </button>
+      </section>
+
+      <section class="result-section hidden" id="result">
+        <div class="result-topline">
+          <span class="eyebrow">YOUR THREE-CARD READING</span>
+          <span id="resultMeta"></span>
+        </div>
+
+        <h2>今日秘语，已经在等你。</h2>
+
+        <p class="result-lead">
+          三张牌从可见与不可见之间浮现，带来一段只属于今天的回应。
+        </p>
+
+        <div
+          class="ai-status hidden"
+          id="aiStatus"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+        <div class="tarot-spread" id="tarotSpread"></div>
+
+        <div class="core-secret hidden" id="coreSecret"></div>
+
+        <div class="reading-copy" id="readingCopy"></div>
+
+        <div class="result-actions hidden" id="resultActions">
+          <button class="secondary-cta" id="copyBtn">
+            复制结果文案
+          </button>
+
+          <button class="primary-cta" id="shareBtn">
+            生成分享结果图 <span>↗</span>
+          </button>
+
+          <button
+            class="secondary-cta reading-error hidden"
+            id="retryBtn"
+            type="button"
+          >
+            牌面展示沉默了？请再试一次。
+          </button>
+        </div>
+
+        <div class="feedback hidden" id="feedback" aria-live="polite">
+          <p>这次的秘语对你有帮助吗？</p>
+
+          <div class="feedback-options">
+            <button type="button" data-feedback="有帮助">
+              有帮助
+            </button>
+
+            <button type="button" data-feedback="一般">
+              一般
+            </button>
+
+            <button type="button" data-feedback="没有帮助">
+              没有帮助
+            </button>
+          </div>
+
+          <span
+            class="feedback-thanks hidden"
+            id="feedbackThanks"
+          ></span>
+        </div>
+
+        <p class="disclaimer">
+          本内容仅供娱乐与自我探索，不代表确定的未来预测。
+        </p>
+
+        <details class="stats-panel">
+          <summary>本机测试数据概览</summary>
+
+          <div class="stats-grid">
+            <div>
+              <span>最常选择饮品</span>
+              <strong id="topDrink">—</strong>
+            </div>
+
+            <div>
+              <span>最常见情绪</span>
+              <strong id="topMood">—</strong>
+            </div>
+
+            <div>
+              <span>完成占卜比例</span>
+              <strong id="completionRate">0%</strong>
+            </div>
+
+            <div>
+              <span>分享点击次数</span>
+              <strong id="shareCount">0</strong>
+            </div>
+          </div>
+
+          <p>
+            数据仅保存在当前浏览器，用于产品测试，不会上传。
+          </p>
+        </details>
+
+        <button class="restart" id="restartBtn">
+          ↻ 再饮见一次
+        </button>
+      </section>
+
+      <footer>
+        今日饮见 · Sip & Arcana <span>✦</span>
+      </footer>
+    </main>
+
+    <script src="./app.js?v=20260909"></script>
+  </body>
+</html>        </div>
 
         <p class="section-intro">
           每一杯饮品，都是你今天选择照顾自己的方式。
